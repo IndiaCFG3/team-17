@@ -47,8 +47,9 @@ class UserPostListView(ListView):
     paginate_by = 3
     
     def get_queryset(self):
-        user = get_object_or_404(User, username = self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')    
+        post = Post.objects.filter(title = self.kwargs.get('title'))
+        #a = post.objects.all()
+        return post  
 
 
 class PostDetailView(DetailView):
@@ -56,14 +57,14 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title','Lane_name','WasteIn','WasteOut']
+    fields = ['title','Lane_name','WasteIn','WasteOut','site_image']
     def form_valid(self,form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Post
-    fields = ['title','Lane_name','WasteIn','WasteOut']
+    fields = ['title','Lane_name','WasteIn','WasteOut','site_image']
     
     def form_valid(self,form):
         form.instance.author = self.request.user
@@ -89,6 +90,32 @@ class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
             return True
         return False
 
+class PostGraphView(ListView):
+    model = Post
+    context_object_name = 'posts'
+
+def mati(request):
+    if request.method == 'POST':
+        c = request.POST["c"]
+    v=Post.objects.all()
+    lanel=[]
+    wasteinl=[]
+    for i in v:
+        if(i.title==str(c)):
+            lanel.append(i.Lane_name)
+            wasteinl.append(i.WasteIn)
+
+    print(lanel)
+    print(wasteinl)
+    
+    plt.bar(lanel,wasteinl, color ='maroon',  width = 0.1) 
+    
+    plt.xlabel("Lane Numbers") 
+    plt.ylabel("Waste collected in kgs") 
+    plt.title("Collected in a particular city") 
+    #plt.show()
+    plt.savefig("media/img.png")
+    return render(request,'about.html')
 
 def about(request):
     #return HttpResponse('<h1>Blog About</h1>')

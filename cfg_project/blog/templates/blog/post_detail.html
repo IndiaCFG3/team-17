@@ -15,8 +15,10 @@
         </div>
         <h2 class="article-title">{{ object.title }}</h2>
         <p class="article-content">Lane: {{ post.Lane_name }}</p>
-        <p class="article-content">Waste IN: {{ post.WasteIn }}</p>
-        <p class="article-content">Waste Out: {{ post.WasteOut }}</p>
+        <p class="article-content">Waste IN: {{ post.WasteIn }} Dozens</p>
+        <p class="article-content">Waste Out: {{ post.WasteOut }} Dozens</p>
+        <img src = "{{ object.site_image.url }}">
     </div>
+   
     </article>
 {% endblock content %}

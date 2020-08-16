@@ -5,13 +5,13 @@
     <img class = "rounded-circle article-img" src = "{{ post.author.profile.image.url }}"">
       <div class="media-body">
         <div class="article-metadata">
-          <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+          <a class="mr-2" href="{% url 'user-posts' post.title %}">{{ post.title }}</a>
           <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-        </div>
-        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+        </div>  
+        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.author }}</a></h2>
         <p class="article-content">Lane: {{ post.Lane_name }}</p>
-        <p class="article-content">Waste IN: {{ post.WasteIn }}</p>
-        <p class="article-content">Waste Out: {{ post.WasteOut }}</p>
+        <p class="article-content">Waste IN: {{ post.WasteIn }} Dozens</p>
+        <p class="article-content">Waste Out: {{ post.WasteOut }} Dozens</p>
       </div>
     </article>
   {% endfor %}
